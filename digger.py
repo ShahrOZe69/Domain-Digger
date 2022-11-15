@@ -50,6 +50,15 @@ def reverse_lookup_ip_ipwatson(ip):
     return res.json()['results']['domain']
 
 
+def reverse_lookup_ipaddress(ip):
+    """Reverse lookup from ipaddress.com website"""
+    res = requests.post('https://www.ipaddress.com/reverse-ip-lookup',data={'host':f'{ip}'},headers={'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'})
+
+    soup = BeautifulSoup(res.content,features = 'html.parser')
+    li = soup.find('ol').find_all('li')
+    domains = [i.find('a').text for i in li]
+    return domains
+    
 
 def ips(start, end):
     import socket, struct
@@ -70,3 +79,4 @@ if __name__=='__main__':
     # print(his)
     # rev = reverse_lookup_ip_viewdns('8.8.8.8')
     #print(rev)
+    #print(len(reverse_lookup_ipaddress('8.8.8.8')))
