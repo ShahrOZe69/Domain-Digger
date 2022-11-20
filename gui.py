@@ -18,10 +18,12 @@ def gui():
         if event =='-go-':
             if values['-in-'] == 'Domain List' or values['-in-'] == 'IP List': 
                 input = multiline_input()
-                break
+                if input:
+                    break
             elif values['-in-'] == 'IP Range':
                 input = ip_input()
-                break
+                if input:
+                    break
 
     
     window.close()
@@ -74,10 +76,14 @@ def multiline_input():
     window = sg.Window('Domain Digger', layout)
     while True:
         event,values = window.read()
-        if event == '-ok-' or event == sg.WIN_CLOSED:
+        if event == '-ok-':
+            vals =  values['-list-'].splitlines()
+            window.close()
+            return vals
+        elif event == sg.WIN_CLOSED:
             break
     window.close()
-    return values['-list-']
+
 
 
 if __name__=='__main__':
