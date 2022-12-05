@@ -1,7 +1,12 @@
-import gui
-import digger
-import os
-import time
+try:
+    import gui
+    import digger
+    import os
+    import time
+except Exception as e:
+    print(f'Error Importing!! {e}')
+
+input('Press Enter to start!')
 
 def remove_already_processed(ips):
     if os.path.exists('database.txt'):
@@ -17,6 +22,7 @@ def remove_already_processed(ips):
 def save_results(domains):
     # Sort the domains alphabetically
     domains = sorted(domains)
+    domains =[i.replace('www.','') for i in domains]
     c = 'w'
     if os.path.isfile('results.txt'):
         c = input('Results file Already exists, Overwrite(Y) or Append(N)? ')
@@ -113,7 +119,7 @@ if __name__=='__main__':
     # create empty database file if not exists
     if not os.path.exists('database.txt'):
         with open('database.txt','w') as f:
-            f.write(str([]))
+            pass
 
     print("Program Started................")
     input_data,type = gui.gui()
